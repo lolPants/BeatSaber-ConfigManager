@@ -11,6 +11,7 @@ namespace ConfigManager
 
         public void OnApplicationStart()
         {
+            Manager.EnsureConfigFile();
             Logger.Log("Loaded!");
         }
 
