@@ -99,18 +99,6 @@ namespace BeatSaberConfigManager
             Flush();
             return value;
         }
-        public double Get(string key, double defaultValue, bool saveDefault = false)
-        {
-            double value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public long Get(string key, long defaultValue, bool saveDefault = false)
-        {
-            long value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
         public IEnumerable<bool> Get(string key, IEnumerable<bool> defaultValue, bool saveDefault = false)
         {
             IEnumerable<bool> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
@@ -135,30 +123,14 @@ namespace BeatSaberConfigManager
             Flush();
             return value;
         }
-        public IEnumerable<double> Get(string key, IEnumerable<double> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<double> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public IEnumerable<long> Get(string key, IEnumerable<long> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<long> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
 
         public void Set(string key, bool value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, string value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, int value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, float value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, double value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, long value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, IEnumerable<bool> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, IEnumerable<string> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, IEnumerable<int> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, IEnumerable<float> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<double> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<long> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
     }
 }

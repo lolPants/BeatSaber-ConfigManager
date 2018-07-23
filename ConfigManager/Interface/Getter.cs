@@ -75,36 +75,6 @@ namespace BeatSaberConfigManager.Interface
             }
         }
 
-        public double GetValueInternal(string key, double defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<double>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public long GetValueInternal(string key, long defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<long>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
         public IEnumerable<bool> GetValueInternal(string key, IEnumerable<bool> defaultValue, bool saveDefault = false)
         {
             try
@@ -155,36 +125,6 @@ namespace BeatSaberConfigManager.Interface
             try
             {
                 return _settings.Get<IEnumerable<float>>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<double> GetValueInternal(string key, IEnumerable<double> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<double>>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<long> GetValueInternal(string key, IEnumerable<long> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<long>>(key);
             }
             catch (Exception)
             {

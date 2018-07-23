@@ -59,26 +59,6 @@ namespace BeatSaberConfigManager.Interface
             return field;
         }
 
-        public TomlObject SetValueInternal(string key, double value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, long value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
         public TomlObject SetValueInternal(string key, IEnumerable<bool> value, string comment)
         {
             TomlObject field = _settings.ContainsKey(key) ?
@@ -110,26 +90,6 @@ namespace BeatSaberConfigManager.Interface
         }
 
         public TomlObject SetValueInternal(string key, IEnumerable<float> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<double> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<long> value, string comment)
         {
             TomlObject field = _settings.ContainsKey(key) ?
                 _settings.Update(key, value) :
