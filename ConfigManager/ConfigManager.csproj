@@ -59,6 +59,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager.cs" />
+    <Compile Include="Interface\Setter.cs" />
     <Compile Include="Misc\Logger.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
