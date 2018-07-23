@@ -7,11 +7,11 @@ namespace BeatSaberConfigManager
     public class Plugin : IPlugin
     {
         public string Name => "ConfigManager";
-        public string Version => "0.1.0";
+        public string Version => "0.2.0";
 
         public void OnApplicationStart()
         {
-            ConfigManager.EnsureConfigFile();
+            ConfigManager.EnsureDirectory();
             Logger.Log("Loaded!");
         }
 

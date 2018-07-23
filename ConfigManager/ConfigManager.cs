@@ -8,11 +8,12 @@ namespace BeatSaberConfigManager
 {
     public class ConfigManager
     {
-        // Config Location
+        // Config Directory
         static string DirPath = Path.Combine(Environment.CurrentDirectory, "UserData");
-        static string FilePath = Path.Combine(DirPath, "ModConfig.toml");
 
+        // Mod Name and Config Path
         public string ModName { get; }
+        public string FilePath { get; }
 
         // Data Values
         TomlTable _toml;
@@ -22,18 +23,12 @@ namespace BeatSaberConfigManager
         private Getter _getter;
         private Setter _setter;
 
-        public static void EnsureConfigFile()
+        public static void EnsureDirectory()
         {
             // Ensure the UserData Directory Exists
             if (!Directory.Exists(DirPath))
             {
                 Directory.CreateDirectory(DirPath);
-            }
-
-            // Ensure the File Exists
-            using (StreamWriter w = File.AppendText(FilePath))
-            {
-                // Do nothing and make sure the file exists first
             }
         }
 
@@ -41,6 +36,7 @@ namespace BeatSaberConfigManager
         {
             // Set Mod Name
             ModName = _modName;
+            FilePath = Path.Combine(DirPath, ModName + ".toml");
 
             // Read in current config and add a new table for self.
             _toml = Toml.ReadFile(FilePath);
