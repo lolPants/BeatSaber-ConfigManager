@@ -6,7 +6,7 @@ using Nett;
 
 namespace ConfigManager
 {
-    class ConfigManager
+    public class ConfigManager
     {
         // Config Location
         static string DirPath = Path.Combine(Environment.CurrentDirectory, "UserData");
@@ -19,6 +19,7 @@ namespace ConfigManager
         TomlTable _settings;
 
         // Interfaces
+        private Getter _getter;
         private Setter _setter;
 
         public static void EnsureConfigFile()
@@ -57,21 +58,87 @@ namespace ConfigManager
             }
 
             // Define Interfaces
+            _getter = new Getter(_settings);
             _setter = new Setter(_settings);
 
             Flush();
         }
 
-        public void Flush() { Toml.WriteFile(_toml, FilePath);  }
+        public void Flush() { Toml.WriteFile(_toml, FilePath); }
 
-        // So...
-        // To anyone looking at the next lines of code: I'm sorry.
-        // The TOML library I'm using DOESN'T HAVE GENERICS
-        // Well it does. BUT ONLY PRIVATE METHODS.
-        // I'm also probably using it wrong.
-        // C# is not my strongest language.
+        public bool Get(string key, bool defaultValue, bool saveDefault = false)
+        {
+            bool value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public string Get(string key, string defaultValue, bool saveDefault = false)
+        {
+            string value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public int Get(string key, int defaultValue, bool saveDefault = false)
+        {
+            int value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public float Get(string key, float defaultValue, bool saveDefault = false)
+        {
+            float value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public double Get(string key, double defaultValue, bool saveDefault = false)
+        {
+            double value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public long Get(string key, long defaultValue, bool saveDefault = false)
+        {
+            long value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<bool> Get(string key, IEnumerable<bool> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<bool> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<string> Get(string key, IEnumerable<string> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<string> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<int> Get(string key, IEnumerable<int> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<int> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<float> Get(string key, IEnumerable<float> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<float> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<double> Get(string key, IEnumerable<double> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<double> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
+        public IEnumerable<long> Get(string key, IEnumerable<long> defaultValue, bool saveDefault = false)
+        {
+            IEnumerable<long> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
+            Flush();
+            return value;
+        }
 
-        // Handle all the fucking data types.
         public void Set(string key, bool value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, string value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
         public void Set(string key, int value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
