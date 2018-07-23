@@ -38,6 +38,12 @@ namespace BeatSaberConfigManager
             ModName = _modName;
             FilePath = Path.Combine(DirPath, ModName + ".toml");
 
+            // Ensure the File Exists
+            using (StreamWriter w = File.AppendText(FilePath))
+            {
+                // Do nothing and make sure the file exists first
+            }
+
             // Read in current config and add a new table for self.
             _toml = Toml.ReadFile(FilePath);
 
