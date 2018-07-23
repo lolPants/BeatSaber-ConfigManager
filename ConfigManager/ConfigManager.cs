@@ -23,6 +23,9 @@ namespace BeatSaberConfigManager
         private Getter _getter;
         private Setter _setter;
 
+        /// <summary>
+        /// Create the UserData directory if it doesn't exist
+        /// </summary>
         public static void EnsureDirectory()
         {
             // Ensure the UserData Directory Exists
@@ -66,6 +69,9 @@ namespace BeatSaberConfigManager
             Flush();
         }
 
+        /// <summary>
+        /// Write current config state to disk
+        /// </summary>
         public void Flush() { Toml.WriteFile(_toml, FilePath); }
 
         public bool Get(string key, bool defaultValue, bool saveDefault = false)
