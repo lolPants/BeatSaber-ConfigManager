@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace BeatSaberConfigManager.Misc
 {
@@ -23,6 +25,19 @@ namespace BeatSaberConfigManager.Misc
         }
 
         /// <summary>
+        /// Removes characters that aren't allowed in a file name.
+        /// </summary>
+        /// <param name="input">The string to sanitise.</param>
+        /// <param name="replacement">[OPTIONAL] String to replace illegal characters with.</param>
+        /// <returns>The resulting sanitised string.</returns>
+        public static string RemoveIllegalChars(this string input, string replacement = "")
+        {
+            var regexSearch = new string(Path.GetInvalidFileNameChars()) + new string(Path.GetInvalidPathChars());
+            var r = new Regex(string.Format("[{0}]", Regex.Escape(regexSearch)));
+            return r.Replace(input, replacement);
+        }
+
+        /// <summary>
         /// Escapes a string for use in a filename.
         /// </summary>
         /// <param name="s">The string to escape.</param>
@@ -30,7 +45,8 @@ namespace BeatSaberConfigManager.Misc
         public static string PathEscape(this string s)
         {
             // TODO: Add more escape methods
-            return s.ToPascalCase();
+            return s.RemoveIllegalChars()
+                .ToPascalCase();
         }
     }
 }
