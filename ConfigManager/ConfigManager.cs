@@ -6,7 +6,7 @@ using Nett;
 
 namespace ConfigManager
 {
-    class Manager
+    class ConfigManager
     {
         // Config Location
         static string DirPath = Path.Combine(Environment.CurrentDirectory, "UserData");
@@ -36,7 +36,7 @@ namespace ConfigManager
             }
         }
 
-        public Manager(string _modName)
+        public ConfigManager(string _modName)
         {
             // Set Mod Name
             ModName = _modName;
