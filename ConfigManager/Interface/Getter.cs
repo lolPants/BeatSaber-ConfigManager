@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Nett;
 
-namespace ConfigManager.Interface
+namespace BeatSaberConfigManager.Interface
 {
     class Getter
     {

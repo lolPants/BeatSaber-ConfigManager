@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using ConfigManager.Interface;
+using BeatSaberConfigManager.Interface;
 using Nett;
 
-namespace ConfigManager
+namespace BeatSaberConfigManager
 {
     public class ConfigManager
     {

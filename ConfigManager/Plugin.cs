@@ -1,8 +1,8 @@
 ﻿using System;
-using ConfigManager.Misc;
+using BeatSaberConfigManager.Misc;
 using IllusionPlugin;
 
-namespace ConfigManager
+namespace BeatSaberConfigManager
 {
     public class Plugin : IPlugin
     {

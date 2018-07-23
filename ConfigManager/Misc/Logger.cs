@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConfigManager.Misc
+namespace BeatSaberConfigManager.Misc
 {
     class Logger
     {
