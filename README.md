@@ -14,10 +14,11 @@ using BeatSaberConfigManager;
 ```
 
 Instantiate a settings object. The name parameter can be any identifier for your plugin.  
-Any clashes should be avoided as you will then be able to read/write other plugins' config.
+Any clashes should be avoided as you will then be able to read/write other plugins' config.  
+The plugin name will be sanitesd to PascalCase with no spaces. Any illegal file path characters will also be stripped.
 
 ```csharp
-ConfigManager config = new ConfigManager("<plugin name>");
+ConfigManager config = new ConfigManager("PluginName");
 ```
 
 #### Get a Value
