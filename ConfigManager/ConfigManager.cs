@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using BeatSaberConfigManager.Misc;
 using BeatSaberConfigManager.Interface;
 using Nett;
 
@@ -38,7 +39,7 @@ namespace BeatSaberConfigManager
         public ConfigManager(string _modName)
         {
             // Set Mod Name
-            ModName = _modName;
+            ModName = _modName.PathEscape();
             FilePath = Path.Combine(DirPath, ModName + ".toml");
 
             // Ensure the File Exists
