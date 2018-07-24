@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="ConfigManager.cs" />
     <Compile Include="Interface\Getter.cs" />
+    <Compile Include="KeyManager.cs" />
     <Compile Include="Interface\Setter.cs" />
     <Compile Include="Misc\Logger.cs" />
     <Compile Include="Misc\StringExtensions.cs" />

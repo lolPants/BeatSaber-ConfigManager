@@ -1,28 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using BeatSaberConfigManager.Misc;
 using BeatSaberConfigManager.Interface;
 using Nett;
 
 namespace BeatSaberConfigManager
 {
-    public class ConfigManager
+    public class ConfigManager : KeyManager
     {
-        // Config Directory
-        static string DirPath = Path.Combine(Environment.CurrentDirectory, "UserData");
-
-        // Mod Name and Config Path
-        public string ModName { get; }
+        // File Path
         public string FilePath { get; }
-
-        // Data Values
-        TomlTable _toml;
-        TomlTable _settings;
-
-        // Interfaces
-        private Getter _getter;
-        private Setter _setter;
 
         /// <summary>
         /// Create the UserData directory if it doesn't exist
@@ -36,31 +23,29 @@ namespace BeatSaberConfigManager
             }
         }
 
-        public ConfigManager(string _modName)
+        public ConfigManager(string _modName) : base(_modName)
         {
-            // Set Mod Name
-            ModName = _modName.PathEscape();
-            FilePath = Path.Combine(DirPath, ModName + ".toml");
+            // Create File Path
+            FilePath = Path.Combine(DirPath, KeyName + ".toml");
 
-            // Ensure the File Exists
+            // Ensure the File Exists 
             using (StreamWriter w = File.AppendText(FilePath))
             {
-                // Do nothing and make sure the file exists first
+                // Do nothing and make sure the file exists first 
             }
-
-            // Read in current config and add a new table for self.
-            _toml = Toml.ReadFile(FilePath);
-
+            
+            // Assign TOML Structure
+            _parent = Toml.ReadFile(FilePath);
             try
             {
-                // Load from file if table exists
-                _settings = _toml.Get<TomlTable>(ModName);
+                // Try to get table from existing structure
+                _settings = _parent.Get<TomlTable>(KeyName);
             }
             catch (KeyNotFoundException)
             {
-                // Create new table if not
-                _toml[ModName] = Toml.Create();
-                _settings = _toml.Get<TomlTable>(ModName);
+                // Create new table if it doesn't exist
+                _parent[KeyName] = Toml.Create();
+                _settings = _parent.Get<TomlTable>(KeyName);
             }
 
             // Define Interfaces
@@ -73,24 +58,13 @@ namespace BeatSaberConfigManager
         /// <summary>
         /// Write current config state to disk
         /// </summary>
-        public void Flush() => Toml.WriteFile(_toml, FilePath);
+        public override void Flush() => Toml.WriteFile(_parent, FilePath);
 
-        public bool Get(string key, bool defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public string Get(string key, string defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public int Get(string key, int defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public float Get(string key, float defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public List<bool> Get(string key, List<bool> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public List<string> Get(string key, List<string> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public List<int> Get(string key, List<int> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-        public List<float> Get(string key, List<float> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
-
-        public void Set(string key, bool value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, string value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, int value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, float value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, IEnumerable<bool> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, IEnumerable<string> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, IEnumerable<int> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
-        public void Set(string key, IEnumerable<float> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        /// <summary>
+        /// Create a manager for a child key in the same file.
+        /// </summary>
+        /// <param name="childName">Name of the child key.</param>
+        /// <returns>A KeyManager instance.</returns>
+        public KeyManager CreateSubKey (string childName) => new KeyManager(KeyName, _settings, Flush);
     }
 }
