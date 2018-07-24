@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using BeatSaberConfigManager.Misc;
@@ -64,7 +64,7 @@ namespace BeatSaberConfigManager
             }
 
             // Define Interfaces
-            _getter = new Getter(_settings);
+            _getter = new Getter(_settings, Flush);
             _setter = new Setter(_settings, Flush);
 
             Flush();
@@ -75,54 +75,14 @@ namespace BeatSaberConfigManager
         /// </summary>
         public void Flush() => Toml.WriteFile(_toml, FilePath);
 
-        public bool Get(string key, bool defaultValue, bool saveDefault = false)
-        {
-            bool value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public string Get(string key, string defaultValue, bool saveDefault = false)
-        {
-            string value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public int Get(string key, int defaultValue, bool saveDefault = false)
-        {
-            int value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public float Get(string key, float defaultValue, bool saveDefault = false)
-        {
-            float value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public IEnumerable<bool> Get(string key, IEnumerable<bool> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<bool> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public IEnumerable<string> Get(string key, IEnumerable<string> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<string> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public IEnumerable<int> Get(string key, IEnumerable<int> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<int> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
-        public IEnumerable<float> Get(string key, IEnumerable<float> defaultValue, bool saveDefault = false)
-        {
-            IEnumerable<float> value = _getter.GetValueInternal(key, defaultValue, saveDefault);
-            Flush();
-            return value;
-        }
+        public bool Get(string key, bool defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public string Get(string key, string defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public int Get(string key, int defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public float Get(string key, float defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public List<bool> Get(string key, List<bool> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public List<string> Get(string key, List<string> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public List<int> Get(string key, List<int> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
+        public List<float> Get(string key, List<float> defaultValue, bool saveDefault = false) => _getter.GetValueInternal(key, defaultValue, saveDefault);
 
         public void Set(string key, bool value, string comment = "") => _setter.SetValueInternal(key, value, comment);
         public void Set(string key, string value, string comment = "") => _setter.SetValueInternal(key, value, comment);

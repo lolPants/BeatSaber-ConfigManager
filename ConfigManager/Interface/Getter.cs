@@ -9,17 +9,17 @@ namespace BeatSaberConfigManager.Interface
         private TomlTable _settings;
         private Setter _setter;
 
-        public Getter(TomlTable settings)
+        public Getter(TomlTable settings, Action Flush)
         {
             _settings = settings;
-            _setter = new Setter(_settings);
+            _setter = new Setter(_settings, Flush);
         }
 
-        public bool GetValueInternal(string key, bool defaultValue, bool saveDefault = false)
+        public T GetValueInternal<T>(string key, T defaultValue, bool saveDefault = false)
         {
             try
             {
-                return _settings.Get<bool>(key);
+                return _settings.Get<T>(key);
             }
             catch (Exception)
             {
@@ -30,101 +30,11 @@ namespace BeatSaberConfigManager.Interface
             }
         }
 
-        public string GetValueInternal(string key, string defaultValue, bool saveDefault = false)
+        public List<T> GetValueInternal<T>(string key, List<T> defaultValue, bool saveDefault = false)
         {
             try
             {
-                return _settings.Get<string>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public int GetValueInternal(string key, int defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<int>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public float GetValueInternal(string key, float defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<float>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<bool> GetValueInternal(string key, IEnumerable<bool> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<bool>>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<string> GetValueInternal(string key, IEnumerable<string> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<string>>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<int> GetValueInternal(string key, IEnumerable<int> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<int>>(key);
-            }
-            catch (Exception)
-            {
-                if (saveDefault)
-                    _setter.SetValueInternal(key, defaultValue, "");
-
-                return defaultValue;
-            }
-        }
-
-        public IEnumerable<float> GetValueInternal(string key, IEnumerable<float> defaultValue, bool saveDefault = false)
-        {
-            try
-            {
-                return _settings.Get<IEnumerable<float>>(key);
+                return _settings.Get<List<T>>(key);
             }
             catch (Exception)
             {
