@@ -4,7 +4,7 @@ using Nett;
 
 namespace BeatSaberConfigManager.Interface
 {
-    class Setter
+    public class Setter
     {
         private TomlTable _settings;
         private readonly Action Flush;
