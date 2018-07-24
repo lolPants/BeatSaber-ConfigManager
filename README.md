@@ -21,7 +21,18 @@ The plugin name will be sanitesd to PascalCase with no spaces. Any illegal file 
 ConfigManager config = new ConfigManager("PluginName");
 ```
 
-#### Get a Value
+#### Sub-Key Support
+If you want to move some config keys to another namespace *(ie: if you have lots of config options and want to group them)* then you can create a `KeyManager`. The interface for getting and setting values is the same.
+
+```csharp
+// Make sure you have a base ConfigManager
+ConfigManager config = new ConfigManager("PluginName");
+
+// Define a new KeyManager parented to the config ConfigManager
+KeyManager sub = config.CreateSubKey("SubKey");
+```
+
+#### Getting a Value
 Parameters are in the form `key`, `defaultValue`, `overwrite`  
 If the value at `key` is of the wrong type, or does not exist it will return `defaultValue`.  
 `overwrite` is optional. When `true` it will save the default value to config.
@@ -31,7 +42,7 @@ If the value at `key` is of the wrong type, or does not exist it will return `de
 bool enabled = config.Get("enabled", true, true);
 ```
 
-#### Set a Value
+#### Setting a Value
 Parameters are in the form `key`, `value`, `comment`  
 `comment` is optional. If set, it will include a comment line above the key. This can be used to explain what the config value represents.
 
@@ -49,3 +60,6 @@ Currently only a few data types can be saved/loaded. These are as follows. You c
 * `float`
 * `double`
 * `long`
+
+### Caveats
+Currently you can encode `IEnumerable<T>` of any of the above types. But you can only decode to `List<T>` of that type. This is because Arrays have a fixed length and there is no way for the parser to know the length beforehand.
