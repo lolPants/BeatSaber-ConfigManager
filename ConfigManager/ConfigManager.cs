@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using BeatSaberConfigManager.Misc;
@@ -65,7 +65,7 @@ namespace BeatSaberConfigManager
 
             // Define Interfaces
             _getter = new Getter(_settings);
-            _setter = new Setter(_settings);
+            _setter = new Setter(_settings, Flush);
 
             Flush();
         }
@@ -73,7 +73,7 @@ namespace BeatSaberConfigManager
         /// <summary>
         /// Write current config state to disk
         /// </summary>
-        public void Flush() { Toml.WriteFile(_toml, FilePath); }
+        public void Flush() => Toml.WriteFile(_toml, FilePath);
 
         public bool Get(string key, bool defaultValue, bool saveDefault = false)
         {
@@ -124,13 +124,13 @@ namespace BeatSaberConfigManager
             return value;
         }
 
-        public void Set(string key, bool value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, string value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, int value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, float value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<bool> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<string> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<int> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
-        public void Set(string key, IEnumerable<float> value, string comment = "") { _setter.SetValueInternal(key, value, comment); Flush(); }
+        public void Set(string key, bool value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, string value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, int value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, float value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, IEnumerable<bool> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, IEnumerable<string> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, IEnumerable<int> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
+        public void Set(string key, IEnumerable<float> value, string comment = "") => _setter.SetValueInternal(key, value, comment);
     }
 }

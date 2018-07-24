@@ -7,96 +7,89 @@ namespace BeatSaberConfigManager.Interface
     class Setter
     {
         private TomlTable _settings;
+        private readonly Action Flush;
 
-        public Setter(TomlTable settings) { _settings = settings; }
+        public Setter(TomlTable settings, Action flush) {
+            _settings = settings;
+            Flush = flush;
+        }
 
-        public void AttatchComments(TomlObject field, string comment)
+        // Seriously, fuck this TOML Library.
+        // WHY DOESN'T IT SUPPORT GENERICS
+
+        public TomlObject SetValueInternal<T>(string key, T value, string comment)
+        {
+            TomlObject field;
+            if (value is bool)
+            {
+                bool v = (bool)(object)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (value is string)
+            {
+                string v = (string)(object)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (value is int)
+            {
+                int v = (int)(object)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (value is float)
+            {
+                float v = (float)(object)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+
+            AttatchComments(field, comment);
+            Flush();
+            return field;
+        }
+
+        public TomlObject SetValueInternal<T>(string key, IEnumerable<T> value, string comment)
+        {
+            TomlObject field;
+            if (typeof(T) == typeof(bool))
+            {
+                IEnumerable<bool> v = (IEnumerable<bool>)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (typeof(T) == typeof(string))
+            {
+                IEnumerable<string> v = (IEnumerable<string>)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (typeof(T) == typeof(int))
+            {
+                IEnumerable<int> v = (IEnumerable<int>)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else if (typeof(T) == typeof(float))
+            {
+                IEnumerable<float> v = (IEnumerable<float>)value;
+                field = _settings.ContainsKey(key) ? _settings.Update(key, v) : field = _settings.Add(key, v);
+            }
+            else
+            {
+                throw new NotSupportedException();
+            }
+
+            AttatchComments(field, comment);
+            Flush();
+            return field;
+        }
+
+        void AttatchComments(TomlObject field, string comment)
         {
             if (comment != "")
             {
                 field.ClearComments();
                 field.AddComment(comment);
             }
-        }
-
-        public TomlObject SetValueInternal(string key, bool value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, string value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, int value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, float value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<bool> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<string> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<int> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
-        }
-
-        public TomlObject SetValueInternal(string key, IEnumerable<float> value, string comment)
-        {
-            TomlObject field = _settings.ContainsKey(key) ?
-                _settings.Update(key, value) :
-                field = _settings.Add(key, value);
-
-            AttatchComments(field, comment);
-            return field;
         }
     }
 }
